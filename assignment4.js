@@ -53,4 +53,13 @@
 			}
 		});
 	});
+
+	$("#mainForm").on('submit', function() {
+		var win = window.open('https://www.google.com/#q=' + $(".flexsearch-input").val().replace(/ /g, "+"));
+		if (win)
+		    win.focus();
+		else
+		    alert('Please allow popups for this website');
+	});
+
 })();
