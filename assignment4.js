@@ -12,47 +12,45 @@
 // keyup events could be helpful to get value of field as the user types
 
 (function() {
-  // Magic!
-  $(".flexsearch-input").keyup(function() {
-  	var prefix = "^" + $(this).val().toLowerCase();
+	$(".flexsearch-input").keyup(function() {
+		var prefix = "^" + $(this).val().toLowerCase();
 
-  	//make a query for the interests/programing terms (included in data=all)
-	$.ajax({
-	  type: 'GET',
-	  url: 'http://www.mattbowytz.com/simple_api.json?data=all',
-	  dataType: 'json',
-	  success: function (data) {
-	  	$.each(data.data, function(key1, value) {
-		  $.each(value, function(key2, searchTerm) {
-		    if (searchTerm.toLowerCase().match(prefix) && prefix != "^") {
-		      if (!$("#result-" + key1 + "-" + key2).length) //if this element doesn't already exist, make it	    	
-   				$("<a class='result' id='result-" + key1 + "-" + key2 + "' href='https://www.google.com/#q=" + searchTerm.replace(/ /g, "+") + "' target='_blank'>").html(searchTerm).insertAfter($(".flexsearch-input")).hide().slideDown("slow");
-   			  }
-   			  else {
-   				$("#result-" + key1 + "-" + key2).remove(); //remove this element if it isn't valid anymore
-   			  }   		      
-		  });
+		//make a query for the interests/programing terms (included in data=all)
+		$.ajax({
+			type: 'GET',
+			url: 'http://www.mattbowytz.com/simple_api.json?data=all',
+			dataType: 'json',
+			success: function (data) {
+				$.each(data.data, function(key1, value) {
+					$.each(value, function(key2, searchTerm) {
+						if (searchTerm.toLowerCase().match(prefix) && prefix != "^") {
+							if (!$("#result-" + key1 + "-" + key2).length) //if this element doesn't already exist, make it	    	
+								$("<a class='result' id='result-" + key1 + "-" + key2 + "' href='https://www.google.com/#q=" + searchTerm.replace(/ /g, "+") + "' target='_blank'>").html(searchTerm).insertAfter($(".flexsearch-input")).hide().slideDown("slow");
+						}
+						else {
+							$("#result-" + key1 + "-" + key2).remove(); //remove this element if it isn't valid anymore
+						}   		      
+					});
+				});
+			}
 		});
-	  }
-	});
 
-	//make a query for the comics (these aren't included in data=all, query separately)
-	$.ajax({
-	  type: 'GET',
-	  url: 'http://www.mattbowytz.com/simple_api.json?data=comics',
-	  dataType: 'json',
-	  success: function (data) {
-	  $.each(data.data, function(key, searchTerm) {
-	    if (searchTerm.toLowerCase().match(prefix) && prefix != "^") {
-	      if (!$("#result-c-" + key).length)		    	
-				$("<a class='result' id='result-c-" + key + "' href='https://www.google.com/#q=" + searchTerm.replace(/ /g, "+") + "' target='_blank'>").html(searchTerm).insertAfter($(".flexsearch-input")).hide().slideDown("slow");
-			  }
-			  else {
-				$("#result-c-" + key).remove();
-			  }   		      
-	  });
-	  }
+		//make a query for the comics (these aren't included in data=all, query separately)
+		$.ajax({
+			type: 'GET',
+			url: 'http://www.mattbowytz.com/simple_api.json?data=comics',
+			dataType: 'json',
+			success: function (data) {
+				$.each(data.data, function(key, searchTerm) {
+					if (searchTerm.toLowerCase().match(prefix) && prefix != "^") {
+						if (!$("#result-c-" + key).length)		    	
+							$("<a class='result' id='result-c-" + key + "' href='https://www.google.com/#q=" + searchTerm.replace(/ /g, "+") + "' target='_blank'>").html(searchTerm).insertAfter($(".flexsearch-input")).hide().slideDown("slow");
+					}
+					else {
+						$("#result-c-" + key).remove();
+					}   		      
+				});
+			}
+		});
 	});
-  });
-  console.log('Keepin\'n it clean with an external script!');
 })();
