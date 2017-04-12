@@ -49,6 +49,19 @@
   -moz-appearance: none;
 }
 
+.result {
+  display: block;
+  color: #333;
+  font-family: 'Helvetica', sans-serif;
+  font-size: 26px;
+  text-decoration: none;
+  margin: 0 0 0 30px;
+  padding: 3px;
+  border-style: solid;
+  border-width: 2px;
+}
+
+
 .flexsearch-submit {
   position: absolute;
   right: 0;
